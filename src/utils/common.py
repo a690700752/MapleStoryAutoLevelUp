@@ -689,6 +689,46 @@ def click_in_game_window(window_title, coord):
     pyautogui.click(loc_click)
     logger.info(f"[click_in_game_window] click at {loc_click}")
 
+def drag_in_game_window(window_title, start_coord, end_coord, duration=0.5):
+    '''
+    Mouse drag in game window from start_coord to end_coord
+
+    Parameters:
+    - window_title: Title of game window
+    - start_coord: Tuple (x, y) - starting position in game coordinates
+    - end_coord: Tuple (x, y) - ending position in game coordinates
+    - duration: Time in seconds for drag operation (default 0.5)
+    '''
+    # Adjust coordinates for macOS
+    if is_mac():
+        start_coord = (start_coord[0] // 2, start_coord[1] // 2 + 10)
+        end_coord = (end_coord[0] // 2, end_coord[1] // 2 + 10)
+
+    # Get window region
+    if is_mac():
+        region = get_window_region_mac(window_title)
+        if region is None:
+            text = f"Cannot find window: {window_title}"
+            logger.error(text)
+            raise RuntimeError(text)
+        win_left, win_top = region["left"], region["top"]
+    else:
+        game_window = gw.getWindowsWithTitle(window_title)[0]
+        win_left, win_top = game_window.left, game_window.top
+
+    # Calculate absolute screen coordinates
+    start_abs = (win_left + start_coord[0], win_top + start_coord[1])
+    end_abs = (win_left + end_coord[0], win_top + end_coord[1])
+
+    # Perform drag operation
+    pyautogui.moveTo(start_abs)
+    pyautogui.mouseDown()
+    time.sleep(0.1)  # Short delay before drag
+    pyautogui.moveTo(end_abs, duration=duration)
+    pyautogui.mouseUp()
+
+    logger.info(f"[drag_in_game_window] drag from {start_abs} to {end_abs}")
+
 def send_email(email_addr, password,
                to, subject, body, attachment_path):
     '''
