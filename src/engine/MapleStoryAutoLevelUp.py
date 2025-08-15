@@ -280,6 +280,7 @@ class MapleStoryAutoBot:
         self.t_last_attack = time.time()
         self.t_last_minimap_update = time.time()
         self.t_to_change_channel = time.time()
+        self.has_moved_minimap = False
 
         # Set init state
         if self.args.init_state != "":
@@ -1607,9 +1608,11 @@ class MapleStoryAutoBot:
             self.t_last_minimap_update = time.time()
             if not self.has_moved_minimap:
                 self.has_moved_minimap = True
-                # drag_in_game_window(self.capture.window_title,
-                #                     self.loc_minimap,
-                #                     (self.loc_minimap[0] + w, self.loc_minimap[1] + h))
+                logger.info(f"Minimap found. Move it to from ({x}, {y}) to (851, 179).")
+                if self.cfg["minimap"]["is_move_to_pos"]:
+                    drag_in_game_window(self.capture.window_title,
+                                        (self.loc_minimap[0] + 40 // 2, self.loc_minimap[1] - 50 // 2),
+                                        (self.cfg["minimap"]["move_to_pos"][0] + 40 // 2, self.cfg["minimap"]["move_to_pos"][1] - 50 // 2))
 
         self.profiler.mark("Get Minimap Location and Size")
 

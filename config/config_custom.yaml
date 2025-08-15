@@ -1,0 +1,11 @@
+bot:
+  map: dragon_territory
+directional_attack:
+  cooldown: 0.3
+  range_x: 100
+health_monitor:
+  add_hp_percent: 0
+  add_mp_percent: 0
+key:
+  directional_attack: j
+  party: '8'

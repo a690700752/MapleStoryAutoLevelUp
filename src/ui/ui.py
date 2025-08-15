@@ -76,7 +76,7 @@ class MainWindow(QMainWindow):
         self.data = load_yaml("config/config_data.yaml")
 
         # Window Settings
-        self.setWindowTitle("MapleStory AutoLevelUp")
+        self.setWindowTitle("alu")
         self.setMinimumSize(1, 1)
         self.resize(TAB_WINDOW_SIZE['Main'][0],
                     TAB_WINDOW_SIZE['Main'][1])

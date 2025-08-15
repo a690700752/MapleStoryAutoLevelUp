@@ -278,6 +278,8 @@ minimap:
   other_player_color: [0, 0, 255] # 🔴 BGR value of the red other player dot on the minimap
   debug_window_upscale: 4         # 🔍 Zoom factor for the route debug image (for visualization only)
   offset: [0, 0]                  # 📐 Don't set this unless playing on global server
+  is_move_to_pos: True            # ✅ Move to the target position on the map or not
+  move_to_pos: [850, 180]         # 🎯 Target position to move the minimap to (img_frame coord)
 
 patrol:
   # 🚶‍♂️ Patrol Mode
@@ -333,3 +335,4 @@ profiler:
   # When the FPS is lower than 5, please use profiler to find which code block is costing more time 
   enable: False       # ✅ To print the profiler result or not
   print_frequency: 30 # Print profiler result for every 30 frames
+
