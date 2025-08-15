@@ -875,7 +875,7 @@ def resize_window(window_title, width=1296, height=759):
     # 取得視窗句柄
     hwnd = win32gui.FindWindow(None, window_title)
     if hwnd == 0:
-        print(f"找不到視窗: {window_title}")
+        logger.error(f"找不到視窗: {window_title}")
         return
 
     # 取得目前視窗位置
@@ -884,4 +884,4 @@ def resize_window(window_title, width=1296, height=759):
 
     # 調整視窗大小
     win32gui.MoveWindow(hwnd, x, y, width, height, True)
-    print(f"已將「{window_title}」調整為 {width}x{height}")
+    logger.info(f"已將「{window_title}」調整為 {width}x{height}")

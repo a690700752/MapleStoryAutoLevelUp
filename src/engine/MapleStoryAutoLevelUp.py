@@ -21,7 +21,7 @@ import yaml
 # Local import
 from src.utils.global_var import WINDOW_WORKING_SIZE
 from src.utils.logger import logger
-from src.utils.common import (find_pattern_sqdiff, draw_rectangle, screenshot, nms,
+from src.utils.common import (drag_in_game_window, find_pattern_sqdiff, draw_rectangle, screenshot, nms,
     load_image, get_mask, get_minimap_loc_size, get_player_location_on_minimap,
     is_mac, override_cfg, load_yaml, get_all_other_player_locations_on_minimap,
     click_in_game_window, mask_route_colors, to_opencv_hsv, debug_minimap_colors,
@@ -71,6 +71,7 @@ class MapleStoryAutoBot:
         self.route_map_viz_signal = None
         # Flags
         self.is_first_frame = True # first frame flag
+        self.has_moved_minimap = False
         self.is_terminated = False # Close all object and thread if True
         self.is_on_ladder = False # Character is on ladder or not
         self.is_show_debug_window = not args.disable_viz #
@@ -1604,6 +1605,11 @@ class MapleStoryAutoBot:
             self.loc_minimap = (x, y)
             self.img_minimap = self.img_frame[y:y+h, x:x+w]
             self.t_last_minimap_update = time.time()
+            if not self.has_moved_minimap:
+                self.has_moved_minimap = True
+                # drag_in_game_window(self.capture.window_title,
+                #                     self.loc_minimap,
+                #                     (self.loc_minimap[0] + w, self.loc_minimap[1] + h))
 
         self.profiler.mark("Get Minimap Location and Size")
 
